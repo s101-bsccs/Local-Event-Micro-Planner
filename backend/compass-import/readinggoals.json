@@ -1,0 +1,38 @@
+[
+  {
+    "userId": {"$oid": "69bebfdf660b5cc2033f2b6e"},
+    "title": "2026 मध्ये 24 पुस्तके पूर्ण करायची",
+    "target": 24,
+    "achieved": 7,
+    "unit": "books",
+    "startDate": {"$date": "2026-01-01T00:00:00.000Z"},
+    "endDate": {"$date": "2026-12-31T00:00:00.000Z"},
+    "status": "active",
+    "createdAt": {"$date": "2026-01-03T08:00:00.000Z"},
+    "updatedAt": {"$date": "2026-03-15T18:30:00.000Z"}
+  },
+  {
+    "userId": {"$oid": "69bebfdf660b5cc2033f2b6e"},
+    "title": "एप्रिलपर्यंत 1200 पाने वाचायची",
+    "target": 1200,
+    "achieved": 640,
+    "unit": "pages",
+    "startDate": {"$date": "2026-02-01T00:00:00.000Z"},
+    "endDate": {"$date": "2026-04-30T00:00:00.000Z"},
+    "status": "active",
+    "createdAt": {"$date": "2026-02-01T09:15:00.000Z"},
+    "updatedAt": {"$date": "2026-03-20T17:00:00.000Z"}
+  },
+  {
+    "userId": {"$oid": "69bebfdf660b5cc2033f2b6e"},
+    "title": "आठवड्याला 5 तास वाचन",
+    "target": 5,
+    "achieved": 5,
+    "unit": "hours",
+    "startDate": {"$date": "2026-03-01T00:00:00.000Z"},
+    "endDate": {"$date": "2026-03-07T00:00:00.000Z"},
+    "status": "completed",
+    "createdAt": {"$date": "2026-03-01T06:30:00.000Z"},
+    "updatedAt": {"$date": "2026-03-07T20:00:00.000Z"}
+  }
+]

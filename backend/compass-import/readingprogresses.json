@@ -1,0 +1,82 @@
+[
+  {
+    "userId": {"$oid": "69bebfdf660b5cc2033f2b6e"},
+    "bookId": {"$oid": "69beeec9b277ab5c982c8ed9"},
+    "bookTitle": "युगान्त",
+    "bookAuthor": "इरावती कर्वे",
+    "bookCover": "assets/books/yugant.jpg",
+    "currentPage": 126,
+    "totalPages": 400,
+    "startDate": {"$date": "2026-03-10T06:00:00.000Z"},
+    "lastReadDate": {"$date": "2026-03-21T18:20:00.000Z"},
+    "status": "reading",
+    "notes": "महाभारतातील पात्रांची मांडणी खूप विचार करायला लावणारी आहे.",
+    "highlights": [
+      {
+        "page": 32,
+        "text": "महाकाव्यातील व्यक्तिरेखा मानवी कमकुवतपणातून अधिक जिवंत होतात.",
+        "note": "या ओळीवर नंतर निबंध लिहायचा.",
+        "color": "yellow",
+        "date": {"$date": "2026-03-12T14:00:00.000Z"}
+      },
+      {
+        "page": 88,
+        "text": "धर्म आणि सत्ता यांच्यातील ताण सतत दिसतो.",
+        "note": "चर्चेसाठी चांगला मुद्दा.",
+        "color": "blue",
+        "date": {"$date": "2026-03-18T16:30:00.000Z"}
+      }
+    ],
+    "createdAt": {"$date": "2026-03-10T06:00:00.000Z"},
+    "updatedAt": {"$date": "2026-03-21T18:20:00.000Z"}
+  },
+  {
+    "userId": {"$oid": "69bebfdf660b5cc2033f2b6e"},
+    "bookId": {"$oid": "69beeec9b277ab5c982c8edc"},
+    "bookTitle": "श्यामची आई",
+    "bookAuthor": "साने गुरुजी",
+    "bookCover": "assets/books/shyamachi-aai.jpg",
+    "currentPage": 200,
+    "totalPages": 200,
+    "startDate": {"$date": "2026-02-14T07:30:00.000Z"},
+    "lastReadDate": {"$date": "2026-02-20T19:00:00.000Z"},
+    "completedDate": {"$date": "2026-02-20T19:00:00.000Z"},
+    "status": "completed",
+    "notes": "सोप्या भाषेत खोल मूल्यांची आठवण करून देणारं पुस्तक.",
+    "highlights": [
+      {
+        "page": 54,
+        "text": "आईच्या शब्दांतून जीवनाचा पाया घडतो.",
+        "note": "खूप भावलेलं वाक्य.",
+        "color": "pink",
+        "date": {"$date": "2026-02-16T13:10:00.000Z"}
+      }
+    ],
+    "createdAt": {"$date": "2026-02-14T07:30:00.000Z"},
+    "updatedAt": {"$date": "2026-02-20T19:00:00.000Z"}
+  },
+  {
+    "userId": {"$oid": "69bebfdf660b5cc2033f2b6e"},
+    "bookId": {"$oid": "69beeec9b277ab5c982c8edf"},
+    "bookTitle": "मृत्युंजय",
+    "bookAuthor": "शिवाजी सावंत",
+    "bookCover": "assets/books/mrutyunjay.jpg",
+    "currentPage": 64,
+    "totalPages": 500,
+    "startDate": {"$date": "2026-03-18T05:45:00.000Z"},
+    "lastReadDate": {"$date": "2026-03-22T06:50:00.000Z"},
+    "status": "reading",
+    "notes": "कर्णाच्या मनातील संघर्ष आणि स्वाभिमान अतिशय प्रभावी वाटतो.",
+    "highlights": [
+      {
+        "page": 21,
+        "text": "नियतीपेक्षा मोठं असतं ते मनुष्याचं धैर्य.",
+        "note": "मुख्य थीम वाटते.",
+        "color": "green",
+        "date": {"$date": "2026-03-19T12:25:00.000Z"}
+      }
+    ],
+    "createdAt": {"$date": "2026-03-18T05:45:00.000Z"},
+    "updatedAt": {"$date": "2026-03-22T06:50:00.000Z"}
+  }
+]
