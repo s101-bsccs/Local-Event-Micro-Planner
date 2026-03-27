@@ -4,6 +4,7 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs';
 import { ToastService } from '../../services/toast.service';
 import { UserService } from '../../services/user.service';
 
@@ -41,11 +42,16 @@ export class RegisterComponent {
     }
 
     this.loading = true;
-    this.userService.register({
+    const payload = {
       name: this.registerForm.controls.name.getRawValue().trim(),
       email: this.registerForm.controls.email.getRawValue().trim().toLowerCase(),
       password: this.registerForm.controls.password.getRawValue()
-    }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+    };
+
+    this.userService.pingServer().pipe(
+      switchMap(() => this.userService.register(payload)),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe({
       next: () => {
         this.toastService.success('Registration complete. Five planner accounts were created for you.');
         void this.router.navigate(['/']);
@@ -72,7 +78,7 @@ export class RegisterComponent {
     }
 
     if (error.status === 0) {
-      return 'The server is waking up or unreachable right now. Please wait a few seconds and try again.';
+      return 'The server is waking up on Render. Please wait about a minute, then try again once.';
     }
 
     if (error.status === 400) {

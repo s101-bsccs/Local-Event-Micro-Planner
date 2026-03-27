@@ -19,6 +19,10 @@ export class UserService {
   readonly currentUser$ = this.currentUserSubject.asObservable();
   readonly account$ = this.accountSubject.asObservable();
 
+  pingServer(): Observable<{ status: string; app: string; time: string }> {
+    return this.http.get<{ status: string; app: string; time: string }>(`${environment.apiUrl}/health`);
+  }
+
   restoreSession(): Observable<AuthSession | null> {
     const accountId = localStorage.getItem(this.accountStorageKey);
 

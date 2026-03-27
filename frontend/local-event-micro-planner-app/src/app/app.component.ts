@@ -20,6 +20,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.themeService.initializeTheme();
+
+    this.userService.pingServer().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      error: () => {
+        // Render free tier may still be waking up; auth screens handle retries gracefully.
+      }
+    });
+
     this.userService.restoreSession().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       error: () => {
         this.userService.logout();
