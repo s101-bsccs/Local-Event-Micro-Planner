@@ -11,8 +11,11 @@ const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
 const allowedOrigin = process.env.CLIENT_URL || 'http://localhost:4200';
-const frontendDistPath = path.resolve(__dirname, '../../frontend/local-event-micro-planner-app/dist/local-event-micro-planner-app/browser');
-const hasBuiltFrontend = fs.existsSync(frontendDistPath);
+const frontendDistRoot = path.resolve(__dirname, '../../frontend/local-event-micro-planner-app/dist/local-event-micro-planner-app');
+const frontendDistPath = fs.existsSync(path.join(frontendDistRoot, 'browser'))
+  ? path.join(frontendDistRoot, 'browser')
+  : frontendDistRoot;
+const hasBuiltFrontend = fs.existsSync(path.join(frontendDistPath, 'index.html'));
 
 app.use(cors({
   origin: [allowedOrigin, 'http://localhost:4200'],
