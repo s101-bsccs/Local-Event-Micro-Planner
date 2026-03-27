@@ -1,0 +1,30 @@
+<header class="navbar">
+  <a class="brand" routerLink="/">
+    <span class="brand-mark">LE</span>
+    <div>
+      <strong>Local Event Micro-Planner</strong>
+      <small *ngIf="account; else guestCopy">{{ account.name }} owns 5 planner accounts</small>
+      <ng-template #guestCopy><small>Hyperlocal planning, minus the chaos.</small></ng-template>
+    </div>
+  </a>
+
+  <nav class="nav-links" *ngIf="account">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/events/create" routerLinkActive="active">Create Event</a>
+  </nav>
+
+  <div class="nav-actions">
+    <label class="user-select" *ngIf="account">
+      <span>Planner</span>
+      <select [value]="currentUserId" (change)="onUserSelect($event)">
+        <option *ngFor="let user of users" [value]="user.id">Planner {{ user.plannerNumber }} - {{ user.name }}</option>
+      </select>
+    </label>
+
+    <button type="button" class="theme-toggle" (click)="toggleTheme()">{{ themeLabel }} mode</button>
+    <a *ngIf="!account" routerLink="/login" class="theme-toggle">Login</a>
+    <a *ngIf="!account" routerLink="/register" class="theme-toggle">Register</a>
+    <button *ngIf="account" type="button" class="theme-toggle" (click)="logout()">Logout</button>
+  </div>
+</header>

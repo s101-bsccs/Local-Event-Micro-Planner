@@ -1,0 +1,123 @@
+.home-shell {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.hero-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 1.2rem;
+}
+
+.hero-copy,
+.hero-side,
+.quick-user {
+  padding: 1.4rem;
+  border-radius: 30px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+}
+
+.hero-copy {
+  background: radial-gradient(circle at top left, rgba(255, 177, 66, 0.24), transparent 45%), var(--surface);
+}
+
+.eyebrow,
+.hero-text,
+.quick-user p,
+.error-banner {
+  color: var(--muted);
+}
+
+.hero-text {
+  margin: 1rem 0 1.4rem;
+  max-width: 52rem;
+}
+
+.hero-side {
+  display: grid;
+  gap: 1rem;
+}
+
+.stat-card,
+.suggestion-card {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem;
+  border-radius: 24px;
+  background: var(--surface-elevated);
+}
+
+.stat-card strong {
+  font-size: 2rem;
+}
+
+.stat-card.accent {
+  background: linear-gradient(135deg, rgba(255, 177, 66, 0.18), rgba(255, 124, 90, 0.16));
+}
+
+.stat-card.lime {
+  background: linear-gradient(135deg, rgba(29, 195, 125, 0.16), rgba(0, 173, 181, 0.16));
+}
+
+.planner-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) minmax(260px, 1fr);
+  gap: 1rem;
+}
+
+.quick-user {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.quick-user input,
+.quick-user button {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0.9rem 1rem;
+  background: var(--surface-elevated);
+  color: var(--text);
+}
+
+.quick-user button {
+  border: none;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: white;
+}
+
+.error-banner {
+  padding: 1rem 1.1rem;
+  border-radius: 18px;
+  background: rgba(214, 84, 84, 0.1);
+  border: 1px solid rgba(214, 84, 84, 0.24);
+}
+
+@media (max-width: 900px) {
+  .hero-panel,
+  .planner-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.quick-user {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.quick-user p {
+  color: var(--muted);
+}
+
+.planner-chip,
+.planner-row {
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+}
+
+.planner-stack {
+  display: grid;
+  gap: 0.75rem;
+}

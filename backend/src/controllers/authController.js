@@ -1,104 +1,110 @@
-const asyncHandler = require('../middleware/asyncHandler');
+const bcrypt = require('bcryptjs');
+const Account = require('../models/Account');
 const User = require('../models/User');
-const generateToken = require('../utils/generateToken');
-const { serializeUser } = require('../utils/serialize');
-const getRequestUser = require('../utils/requestUser');
+const { validateRequiredFields } = require('../utils/validate');
 
-const register = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+function buildPlannerSeeds(accountName, email, accountId) {
+  const [localPart, domainPart = 'planner.local'] = email.toLowerCase().split('@');
 
-  if (!name || !email || !password) {
-    return res.status(400).json({ message: 'Name, email and password are required' });
-  }
+  return Array.from({ length: 5 }, (_, index) => ({
+    accountId,
+    name: `${accountName.split(' ')[0]} Planner ${index + 1}`,
+    email: `${localPart}+planner${index + 1}@${domainPart}`,
+    plannerNumber: index + 1
+  }));
+}
 
-  const existingUser = await User.findOne({ email: email.toLowerCase() });
-  if (existingUser) {
-    return res.status(409).json({ message: 'User already exists' });
-  }
-
-  const user = await User.create({
-    name,
-    email,
-    password
-  });
-
-  res.status(201).json({
-    token: generateToken(user._id.toString()),
-    user: serializeUser(user)
-  });
-});
-
-const login = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json({ message: 'Email and password are required' });
-  }
-
-  const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
-
-  if (!user || !(await user.comparePassword(password))) {
-    return res.status(401).json({ message: 'Invalid email or password' });
-  }
-
-  res.json({
-    token: generateToken(user._id.toString()),
-    user: serializeUser(user)
-  });
-});
-
-const updateProfile = asyncHandler(async (req, res) => {
-  const user = await getRequestUser(req);
-
-  if (!user) {
-    return res.status(404).json({ message: 'User not found' });
-  }
-
-  user.name = req.body.name ?? user.name;
-  user.avatar = req.body.avatar ?? user.avatar;
-  user.email = req.body.email ?? user.email;
-
-  await user.save();
-  res.json(serializeUser(user));
-});
-
-const updatePreferences = asyncHandler(async (req, res) => {
-  const user = await getRequestUser(req);
-
-  if (!user) {
-    return res.status(404).json({ message: 'User not found' });
-  }
-
-  user.preferences = {
-    ...user.preferences.toObject(),
-    ...req.body
+function serializeSession(account, planners) {
+  return {
+    account: {
+      id: account._id,
+      name: account.name,
+      email: account.email
+    },
+    planners: planners.map((planner) => ({
+      id: planner._id,
+      name: planner.name,
+      email: planner.email,
+      plannerNumber: planner.plannerNumber,
+      favoriteEvents: planner.favoriteEvents || []
+    }))
   };
+}
 
-  await user.save();
-  res.json(serializeUser(user));
-});
+async function register(req, res, next) {
+  try {
+    validateRequiredFields(req.body, ['name', 'email', 'password']);
 
-const socialLoginRedirect = asyncHandler(async (req, res) => {
-  const provider = req.params.provider;
-  const frontendBaseUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
-  const providerUrlMap = {
-    google: process.env.GOOGLE_OAUTH_URL,
-    facebook: process.env.FACEBOOK_OAUTH_URL
-  };
+    const email = req.body.email.toLowerCase();
+    const existingAccount = await Account.findOne({ email });
 
-  const providerUrl = providerUrlMap[provider];
+    if (existingAccount) {
+      res.status(400);
+      throw new Error('An account with this email already exists');
+    }
 
-  if (!providerUrl) {
-    return res.redirect(`${frontendBaseUrl}/login?social_error=${provider}_not_configured`);
+    const passwordHash = await bcrypt.hash(req.body.password, 10);
+    const account = await Account.create({
+      name: req.body.name,
+      email,
+      passwordHash,
+      planners: []
+    });
+
+    const planners = await User.insertMany(buildPlannerSeeds(req.body.name, email, account._id));
+    account.planners = planners.map((planner) => planner._id);
+    await account.save();
+
+    res.status(201).json(serializeSession(account, planners));
+  } catch (error) {
+    next(error);
   }
+}
 
-  return res.redirect(providerUrl);
-});
+async function login(req, res, next) {
+  try {
+    validateRequiredFields(req.body, ['email', 'password']);
+
+    const account = await Account.findOne({ email: req.body.email.toLowerCase() });
+
+    if (!account) {
+      res.status(401);
+      throw new Error('Invalid email or password');
+    }
+
+    const isMatch = await bcrypt.compare(req.body.password, account.passwordHash);
+
+    if (!isMatch) {
+      res.status(401);
+      throw new Error('Invalid email or password');
+    }
+
+    const planners = await User.find({ accountId: account._id }).sort({ plannerNumber: 1 }).lean();
+    res.json(serializeSession(account, planners));
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getAccountSession(req, res, next) {
+  try {
+    const account = await Account.findById(req.params.accountId).lean();
+
+    if (!account) {
+      res.status(404);
+      throw new Error('Account not found');
+    }
+
+    const planners = await User.find({ accountId: account._id }).sort({ plannerNumber: 1 }).lean();
+    res.json(serializeSession(account, planners));
+  } catch (error) {
+    next(error);
+  }
+}
 
 module.exports = {
-  login,
   register,
-  socialLoginRedirect,
-  updatePreferences,
-  updateProfile
+  login,
+  getAccountSession,
+  buildPlannerSeeds
 };

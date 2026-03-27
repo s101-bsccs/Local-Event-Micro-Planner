@@ -1,23 +1,19 @@
 {
-  "name": "granthmitra-backend",
-  "version": "2.0.0",
-  "description": "Express and MongoDB backend for the GranthMitra frontend",
+  "name": "local-event-micro-planner-backend",
+  "version": "1.0.0",
+  "description": "Backend API for the Local Event Micro-Planner MEAN stack project",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "check": "node --check server.js",
-    "generate-books": "node src/scripts/generateBooksData.js",
-    "import-books": "node src/scripts/importBooksFromCSV.js",
-    "import-authors": "node src/scripts/importAuthorsFromCSV.js",
-    "generate-users": "node src/scripts/generateUsers.js",
-    "create-indexes": "node src/scripts/createIndexes.js"
+    "seed": "node src/scripts/seed.js",
+    "check": "node --check server.js"
   },
   "keywords": [
-    "granthmitra",
+    "mean",
+    "events",
     "express",
-    "mongodb",
-    "books"
+    "mongodb"
   ],
   "license": "MIT",
   "dependencies": {
@@ -25,7 +21,6 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.0"
   },
   "devDependencies": {

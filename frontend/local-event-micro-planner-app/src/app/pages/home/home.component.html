@@ -1,0 +1,54 @@
+<section class="home-shell">
+  <section class="hero-panel">
+    <div class="hero-copy">
+      <p class="eyebrow">Hyperlocal planning, made simple</p>
+      <h1>Plan small events that actually feel easy to run.</h1>
+      <p class="hero-text">Create neighborhood meetups, community circles, food walks, or makers sessions with live attendee tracking, smart time hints, and a dashboard that keeps everything visible.</p>
+      <app-search [value]="filters.search" (valueChange)="onSearchChange($event)"></app-search>
+    </div>
+
+    <div class="hero-side">
+      <article class="stat-card accent">
+        <strong>{{ totalEvents }}</strong>
+        <span>Total events created</span>
+      </article>
+      <article class="stat-card lime">
+        <strong>{{ totalRsvps }}</strong>
+        <span>Total confirmed RSVPs</span>
+      </article>
+      <article class="suggestion-card" *ngIf="suggestions">
+        <h3>Smart suggestions</h3>
+        <p>Best time nearby: <strong>{{ suggestions.recommendedTime }}</strong></p>
+        <p>Popular categories: <strong>{{ suggestions.popularCategories.join(', ') }}</strong></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="planner-grid">
+    <app-filter [categories]="categories" [cities]="cities" [filters]="filters" (filtersChange)="onFiltersChange($event)"></app-filter>
+
+    <section class="quick-user" *ngIf="account && currentUser">
+      <h3>{{ account.name }}</h3>
+      <p>{{ account.email }}</p>
+      <div class="planner-chip">Active planner: Planner {{ currentUser.plannerNumber }}</div>
+      <p>This account automatically includes five planner profiles after registration. Switch them anytime from the navbar.</p>
+      <div class="planner-stack">
+        <div class="planner-row">Current planner: {{ currentUser.name }}</div>
+        <div class="planner-row">Planner email: {{ currentUser.email }}</div>
+      </div>
+    </section>
+  </section>
+
+  <app-loader *ngIf="loading" message="Loading events, suggestions, and filters..."></app-loader>
+
+  <p *ngIf="!loading && errorMessage" class="error-banner">{{ errorMessage }}</p>
+
+  <app-event-list
+    *ngIf="!loading"
+    title="Event Feed"
+    subtitle="Browse by category, city, date, and current event status"
+    [events]="events"
+    (bookmark)="toggleBookmark($event)"
+    (delete)="deleteEvent($event)"
+  ></app-event-list>
+</section>

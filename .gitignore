@@ -2,52 +2,12 @@
 .env
 .env.local
 .env.*.local
-!.env.production
 !.env.example
 
-# Node modules
-node_modules/
-npm-debug.log
-package-lock.json
-yarn.lock
-
-# Angular
-dist/
-.angular/
-browser/
-
-# IDEs
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
-
-# OS
-Thumbs.db
-.DS_Store
-
-# Testing
-coverage/
-.nyc_output/
-
-# Logs
-logs/
-*.log
-
-# Temporary files
-tmp/
-temp/
-
-# Build artifacts
-build/
-out/
-
-# MongoDB local data
-data/
-mongodb/
-
-# Docker
-.dockerignore
-docker-compose.override.yml
+# Local runtime artifacts
+backend/mongodb-data/
+frontend/local-event-micro-planner-app/serve.log
+frontend/local-event-micro-planner-app/serve-auth.log
+backend/backend.log
+backend/backend-auth.out.log
+backend/backend-auth.err.log

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GranthMitra - Book Covers Gallery</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', 'Nirmala UI', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #8B4513;
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .book-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2);
+        }
+        .book-cover {
+            position: relative;
+            padding-top: 140%;
+            background: #f0f0f0;
+            overflow: hidden;
+        }
+        .book-cover img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .book-card:hover .book-cover img {
+            transform: scale(1.05);
+        }
+        .book-info {
+            padding: 1.2rem;
+        }
+        .book-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+        .book-author {
+            color: #8B4513;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+        .book-description {
+            color: #666;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+        .category {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.2rem 0.6rem;
+            background: #f0f0f0;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: #8B4513;
+        }
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .books-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 ग्रंथमित्र पुस्तक संग्रह</h1>
+        <p class="subtitle">${bookCovers.length}+ मराठी पुस्तकांचे कव्हर</p>
+        <div class="books-grid">
+            ${bookCovers.map(book => `
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="${book.coverUrl}" alt="${book.title}" onerror="this.src='assets/books/default-book-cover.jpg'">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">${book.title}</h3>
+                        <p class="book-author">✍️ ${book.author}</p>
+                        <p class="book-description">${book.description}</p>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    </div>
+</body>
+</html>

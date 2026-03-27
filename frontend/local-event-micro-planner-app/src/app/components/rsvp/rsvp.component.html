@@ -1,0 +1,13 @@
+<section class="rsvp-box">
+  <div>
+    <h3>RSVP</h3>
+    <p>{{ event.attendeesCount }} people are in. {{ event.availableSpots }} spots remain.</p>
+  </div>
+
+  <div class="rsvp-actions">
+    <button type="button" class="primary" [disabled]="event.isFull && !isGoing" (click)="statusChange.emit('going')">
+      {{ isGoing ? 'You are going' : 'Going' }}
+    </button>
+    <button type="button" class="secondary" (click)="statusChange.emit('not-going')">Not Going</button>
+  </div>
+</section>

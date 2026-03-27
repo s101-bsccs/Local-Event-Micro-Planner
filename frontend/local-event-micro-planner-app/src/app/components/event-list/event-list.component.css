@@ -1,0 +1,30 @@
+.list-shell {
+  display: grid;
+  gap: 1rem;
+}
+
+.list-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.list-head p,
+.count,
+.empty-state {
+  color: var(--muted);
+}
+
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.empty-state {
+  padding: 1.3rem;
+  border-radius: 20px;
+  border: 1px dashed var(--border-strong);
+  background: var(--surface);
+}

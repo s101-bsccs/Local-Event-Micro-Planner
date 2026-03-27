@@ -1,36 +1,21 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 
 const authRoutes = require('./routes/authRoutes');
-const bookRoutes = require('./routes/bookRoutes');
-const progressRoutes = require('./routes/progressRoutes');
-const quoteRoutes = require('./routes/quoteRoutes');
-const statsRoutes = require('./routes/statsRoutes');
-const adminRoutes = require('./routes/adminRoutes');
-const { errorHandler, notFound } = require('./middleware/errorMiddleware');
+const eventRoutes = require('./routes/eventRoutes');
+const userRoutes = require('./routes/userRoutes');
+const rsvpRoutes = require('./routes/rsvpRoutes');
+const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
+const allowedOrigin = process.env.CLIENT_URL || 'http://localhost:4200';
+const frontendDistPath = path.resolve(__dirname, '../../frontend/local-event-micro-planner-app/dist/local-event-micro-planner-app/browser');
+const hasBuiltFrontend = fs.existsSync(frontendDistPath);
 
 app.use(cors({
-  origin: function(origin, callback) {
-    // Development: Allow localhost
-    if (process.env.NODE_ENV === 'development') {
-      if (!origin || origin.includes('localhost') || origin.includes('127.0.0.1')) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    } 
-    // Production: Use specific origin from env
-    else if (process.env.NODE_ENV === 'production') {
-      const allowedOrigins = (process.env.CORS_ORIGIN || '').split(',');
-      if (allowedOrigins.includes(origin) || !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    }
-  },
+  origin: [allowedOrigin, 'http://localhost:4200'],
   credentials: true
 }));
 app.use(express.json());
@@ -39,16 +24,27 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
-    message: 'GranthMitra backend is running'
+    app: 'Local Event Micro-Planner',
+    time: new Date().toISOString()
   });
 });
 
 app.use('/api/auth', authRoutes);
-app.use('/api/books', bookRoutes);
-app.use('/api/progress', progressRoutes);
-app.use('/api/quotes', quoteRoutes);
-app.use('/api/stats', statsRoutes);
-app.use('/api/admin', adminRoutes);
+app.use('/api/events', eventRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/rsvp', rsvpRoutes);
+
+if (process.env.NODE_ENV === 'production' && hasBuiltFrontend) {
+  app.use(express.static(frontendDistPath));
+
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+
+    return res.sendFile(path.join(frontendDistPath, 'index.html'));
+  });
+}
 
 app.use(notFound);
 app.use(errorHandler);

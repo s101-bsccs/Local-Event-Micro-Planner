@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: local-event-micro-planner
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: |
+      cd frontend/local-event-micro-planner-app
+      npm install
+      npm run build
+      cd ../../backend
+      npm install
+    startCommand: cd backend && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: CLIENT_URL
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: SEED_ON_START
+        value: true

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B4513;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#654321;stop-opacity:1" />
+    </linearGradient>
+    <style>
+      .book-text { font-family: 'Poppins', 'Nirmala UI', sans-serif; }
+      .book-title-text { font-size: 24px; font-weight: 600; fill: white; }
+      .book-subtitle-text { font-size: 14px; fill: #FFD700; }
+      .book-emoji { font-size: 64px; }
+    </style>
+  </defs>
+  
+  <!-- Main gradient background -->
+  <rect width="300" height="400" fill="url(#grad)"/>
+  
+  <!-- Decorative elements -->
+  <rect x="20" y="20" width="260" height="360" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <line x1="50" y1="370" x2="250" y2="370" stroke="#FFD700" stroke-width="2" opacity="0.5"/>
+  
+  <!-- Book emoji -->
+  <text x="150" y="150" class="book-text book-emoji" text-anchor="middle" dominant-baseline="middle">📖</text>
+  
+  <!-- Title -->
+  <text x="150" y="220" class="book-text book-title-text" text-anchor="middle">ग्रंथमित्र</text>
+  
+  <!-- Subtitle -->
+  <text x="150" y="250" class="book-text book-subtitle-text" text-anchor="middle">Marathi Books</text>
+  
+  <!-- Decorative line -->
+  <line x1="80" y1="270" x2="220" y2="270" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+  
+  <!-- Footer text -->
+  <text x="150" y="350" class="book-text" font-size="10" fill="rgba(255,255,255,0.7)" text-anchor="middle">DEFAULT BOOK COVER</text>
+</svg>

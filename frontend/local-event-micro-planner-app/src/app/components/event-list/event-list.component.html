@@ -1,0 +1,22 @@
+<section class="list-shell">
+  <div class="list-head">
+    <div>
+      <h2>{{ title }}</h2>
+      <p *ngIf="subtitle">{{ subtitle }}</p>
+    </div>
+    <span class="count">{{ events.length }} found</span>
+  </div>
+
+  <div *ngIf="events.length; else emptyState" class="event-grid">
+    <app-event-card
+      *ngFor="let event of events; trackBy: trackById"
+      [event]="event"
+      (bookmark)="bookmark.emit($event)"
+      (delete)="delete.emit($event)"
+    ></app-event-card>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state">No events matched this view yet. Try a different filter or create one nearby.</div>
+  </ng-template>
+</section>

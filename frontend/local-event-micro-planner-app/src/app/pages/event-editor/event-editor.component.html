@@ -1,0 +1,10 @@
+<app-loader *ngIf="loading" message="Preparing the event editor..."></app-loader>
+
+<app-event-form
+  *ngIf="!loading"
+  [event]="event"
+  [suggestions]="suggestions"
+  (submitted)="saveEvent($event)"
+  (cancelled)="cancel()"
+  (cityChange)="updateSuggestions($event)"
+></app-event-form>

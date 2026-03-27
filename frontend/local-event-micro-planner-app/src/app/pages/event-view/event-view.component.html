@@ -1,0 +1,10 @@
+<app-loader *ngIf="loading" message="Loading event details..."></app-loader>
+
+<app-event-details
+  *ngIf="!loading && event"
+  [event]="event"
+  [currentUserId]="currentUserId"
+  (bookmark)="toggleBookmark($event)"
+  (delete)="deleteEvent($event)"
+  (rsvp)="updateRsvp($event)"
+></app-event-details>

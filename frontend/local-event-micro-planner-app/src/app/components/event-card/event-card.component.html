@@ -1,0 +1,41 @@
+<article class="event-card" [routerLink]="['/events', event.id]">
+  <div class="card-top">
+    <span class="pill">{{ event.category }}</span>
+    <button type="button" class="icon-button" (click)="onBookmark($event)">
+      {{ event.isBookmarked ? 'Saved' : 'Save' }}
+    </button>
+  </div>
+
+  <div class="card-copy">
+    <h3>{{ event.title }}</h3>
+    <p>{{ event.description }}</p>
+  </div>
+
+  <dl class="meta-grid">
+    <div>
+      <dt>Status</dt>
+      <dd>{{ event.status }}</dd>
+    </div>
+    <div>
+      <dt>Date</dt>
+      <dd>{{ event.date | date: 'mediumDate' }} at {{ event.time }}</dd>
+    </div>
+    <div>
+      <dt>Venue</dt>
+      <dd>{{ event.location }}, {{ event.city }}</dd>
+    </div>
+    <div>
+      <dt>Attendees</dt>
+      <dd>{{ event.attendeesCount }}/{{ event.capacity }}</dd>
+    </div>
+  </dl>
+
+  <div class="card-footer">
+    <span>{{ event.availableSpots }} spots left</span>
+    <div class="actions">
+      <a class="ghost-link" [routerLink]="['/events', event.id]">View</a>
+      <a *ngIf="event.canEdit" class="ghost-link" [routerLink]="['/events', event.id, 'edit']">Edit</a>
+      <button *ngIf="event.canEdit" type="button" class="danger-link" (click)="onDelete($event)">Delete</button>
+    </div>
+  </div>
+</article>

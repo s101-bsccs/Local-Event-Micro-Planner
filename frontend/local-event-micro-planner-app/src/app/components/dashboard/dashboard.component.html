@@ -1,0 +1,51 @@
+<section class="dashboard-shell">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Welcome back</p>
+      <h1>{{ dashboard.user.name }}</h1>
+      <p>{{ dashboard.user.email }}</p>
+    </div>
+    <div class="stat-grid">
+      <article>
+        <strong>{{ dashboard.personalStats.totalEventsCreated }}</strong>
+        <span>Created</span>
+      </article>
+      <article>
+        <strong>{{ dashboard.personalStats.totalJoinedEvents }}</strong>
+        <span>Joined</span>
+      </article>
+      <article>
+        <strong>{{ dashboard.globalStats.totalEvents }}</strong>
+        <span>Total Events</span>
+      </article>
+      <article>
+        <strong>{{ dashboard.globalStats.totalRsvps }}</strong>
+        <span>Total RSVPs</span>
+      </article>
+    </div>
+  </div>
+
+  <app-event-list
+    title="My Events"
+    subtitle="Events you created and currently manage"
+    [events]="dashboard.myEvents"
+    (bookmark)="bookmark.emit($event)"
+    (delete)="delete.emit($event)"
+  ></app-event-list>
+
+  <app-event-list
+    title="Joined Events"
+    subtitle="Events where your RSVP is marked as Going"
+    [events]="dashboard.joinedEvents"
+    (bookmark)="bookmark.emit($event)"
+    (delete)="delete.emit($event)"
+  ></app-event-list>
+
+  <app-event-list
+    title="Saved Events"
+    subtitle="Your bookmarked ideas for later"
+    [events]="dashboard.favoriteEvents"
+    (bookmark)="bookmark.emit($event)"
+    (delete)="delete.emit($event)"
+  ></app-event-list>
+</section>

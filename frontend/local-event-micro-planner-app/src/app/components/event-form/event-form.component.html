@@ -1,0 +1,73 @@
+<section class="form-shell">
+  <div class="form-copy">
+    <h1>{{ event ? 'Edit local event' : 'Create a local event' }}</h1>
+    <p>Use this compact planner to spin up neighborhood-sized events with simple scheduling hints and capacity tracking.</p>
+
+    <div *ngIf="suggestions" class="suggestion-card">
+      <div>
+        <strong>Suggested best time</strong>
+        <p>{{ suggestions.recommendedTime }} works well based on similar events.</p>
+      </div>
+      <button type="button" (click)="applySuggestedTime()">Use time</button>
+    </div>
+
+    <div class="category-hints">
+      <button type="button" *ngFor="let category of (suggestions?.popularCategories?.length ? suggestions?.popularCategories : suggestedCategories)" (click)="chooseCategory(category)">
+        {{ category }}
+      </button>
+    </div>
+  </div>
+
+  <form class="event-form" [formGroup]="eventForm" (ngSubmit)="submitForm()">
+    <label>
+      <span>Title</span>
+      <input type="text" formControlName="title" placeholder="Neighborhood board games night" />
+    </label>
+
+    <label>
+      <span>Description</span>
+      <textarea rows="4" formControlName="description" placeholder="What should people expect when they join?"></textarea>
+    </label>
+
+    <div class="two-col">
+      <label>
+        <span>Category</span>
+        <input type="text" formControlName="category" placeholder="Community" />
+      </label>
+
+      <label>
+        <span>Capacity</span>
+        <input type="number" formControlName="capacity" min="1" />
+      </label>
+    </div>
+
+    <div class="two-col">
+      <label>
+        <span>Date</span>
+        <input type="date" formControlName="date" />
+      </label>
+
+      <label>
+        <span>Time</span>
+        <input type="time" formControlName="time" />
+      </label>
+    </div>
+
+    <div class="two-col">
+      <label>
+        <span>Location</span>
+        <input type="text" formControlName="location" placeholder="Library hall, park lane, cafe loft" />
+      </label>
+
+      <label>
+        <span>City</span>
+        <input type="text" formControlName="city" placeholder="Pune" />
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="primary">{{ event ? 'Save Changes' : 'Create Event' }}</button>
+      <button type="button" class="secondary" (click)="cancelled.emit()">Cancel</button>
+    </div>
+  </form>
+</section>

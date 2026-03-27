@@ -1,0 +1,25 @@
+<section class="auth-shell">
+  <form class="auth-card" [formGroup]="registerForm" (ngSubmit)="submit()">
+    <p class="eyebrow">Register</p>
+    <h1>Create your account</h1>
+    <p>Right after signup, the app creates five planner profiles for you automatically.</p>
+
+    <label>
+      <span>Name</span>
+      <input type="text" formControlName="name" placeholder="Aarav Mehta" />
+    </label>
+
+    <label>
+      <span>Email</span>
+      <input type="email" formControlName="email" placeholder="aarav@example.com" />
+    </label>
+
+    <label>
+      <span>Password</span>
+      <input type="password" formControlName="password" placeholder="At least 6 characters" />
+    </label>
+
+    <button type="submit" [disabled]="loading">{{ loading ? 'Creating account...' : 'Register' }}</button>
+    <a routerLink="/login">Already registered? Login</a>
+  </form>
+</section>

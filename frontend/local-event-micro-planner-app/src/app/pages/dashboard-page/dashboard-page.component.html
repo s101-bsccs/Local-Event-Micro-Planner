@@ -1,0 +1,8 @@
+<app-loader *ngIf="loading" message="Loading your planner dashboard..."></app-loader>
+
+<app-dashboard
+  *ngIf="!loading && dashboard"
+  [dashboard]="dashboard"
+  (bookmark)="toggleBookmark($event)"
+  (delete)="deleteEvent($event)"
+></app-dashboard>

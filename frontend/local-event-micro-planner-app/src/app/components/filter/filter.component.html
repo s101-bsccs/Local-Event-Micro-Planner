@@ -1,0 +1,39 @@
+<section class="filter-panel">
+  <div class="filter-head">
+    <h3>Filter events</h3>
+    <button type="button" (click)="resetFilters()">Reset</button>
+  </div>
+
+  <form [formGroup]="filterForm">
+    <label>
+      <span>Category</span>
+      <select formControlName="category">
+        <option value="">All categories</option>
+        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+      </select>
+    </label>
+
+    <label>
+      <span>City</span>
+      <select formControlName="city">
+        <option value="">All cities</option>
+        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+      </select>
+    </label>
+
+    <label>
+      <span>Date</span>
+      <input type="date" formControlName="date" />
+    </label>
+
+    <label>
+      <span>Status</span>
+      <select formControlName="status">
+        <option value="">All statuses</option>
+        <option value="Upcoming">Upcoming</option>
+        <option value="Ongoing">Ongoing</option>
+        <option value="Completed">Completed</option>
+      </select>
+    </label>
+  </form>
+</section>

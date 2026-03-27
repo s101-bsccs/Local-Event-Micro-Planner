@@ -1,0 +1,20 @@
+<section class="auth-shell">
+  <form class="auth-card" [formGroup]="loginForm" (ngSubmit)="submit()">
+    <p class="eyebrow">Login</p>
+    <h1>Welcome back</h1>
+    <p>Each signed-in account gets five planner profiles to manage different local event styles.</p>
+
+    <label>
+      <span>Email</span>
+      <input type="email" formControlName="email" />
+    </label>
+
+    <label>
+      <span>Password</span>
+      <input type="password" formControlName="password" />
+    </label>
+
+    <button type="submit" [disabled]="loading">{{ loading ? 'Logging in...' : 'Login' }}</button>
+    <a routerLink="/register">Need an account? Register</a>
+  </form>
+</section>

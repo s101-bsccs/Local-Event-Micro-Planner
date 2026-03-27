@@ -1,0 +1,6 @@
+<div class="toast-stack">
+  <article *ngFor="let toast of (toasts$ | async)" class="toast" [class.error]="toast.type === 'error'">
+    <span>{{ toast.message }}</span>
+    <button type="button" (click)="dismiss(toast.id)">Dismiss</button>
+  </article>
+</div>

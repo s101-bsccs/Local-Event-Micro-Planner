@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap');
+
+:root {
+  --bg: #fff8ef;
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-elevated: #fffdf8;
+  --text: #1e1b18;
+  --muted: #6c625a;
+  --accent: #ff7c5a;
+  --accent-strong: #ffae42;
+  --border: rgba(88, 66, 50, 0.12);
+  --border-strong: rgba(88, 66, 50, 0.24);
+  --shadow-soft: 0 18px 45px rgba(121, 72, 41, 0.12);
+  --shadow-strong: 0 24px 60px rgba(121, 72, 41, 0.18);
+  --canvas: radial-gradient(circle at top left, rgba(255, 196, 81, 0.25), transparent 28%), radial-gradient(circle at bottom right, rgba(0, 173, 181, 0.18), transparent 24%), linear-gradient(180deg, #fff8ef 0%, #fffdf8 100%);
+}
+
+body[data-theme='dark'] {
+  --bg: #171617;
+  --surface: rgba(30, 29, 32, 0.92);
+  --surface-elevated: #232126;
+  --text: #f8efe5;
+  --muted: #c2b8ad;
+  --accent: #ff956f;
+  --accent-strong: #ffd36a;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.32);
+  --shadow-strong: 0 24px 60px rgba(0, 0, 0, 0.45);
+  --canvas: radial-gradient(circle at top left, rgba(255, 149, 111, 0.18), transparent 30%), radial-gradient(circle at bottom right, rgba(0, 173, 181, 0.14), transparent 28%), linear-gradient(180deg, #121114 0%, #18171b 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--canvas);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+h1,
+h2,
+h3,
+strong,
+button,
+a {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
