@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -21,6 +22,7 @@ export class RegisterComponent {
   private readonly destroyRef = inject(DestroyRef);
 
   loading = false;
+  showPassword = false;
 
   readonly registerForm = this.formBuilder.nonNullable.group({
     name: ['', [Validators.required, Validators.minLength(2)]],
@@ -29,24 +31,54 @@ export class RegisterComponent {
   });
 
   submit(): void {
+    if (this.loading) {
+      return;
+    }
+
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
       return;
     }
 
     this.loading = true;
-    this.userService.register(this.registerForm.getRawValue()).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+    this.userService.register({
+      name: this.registerForm.controls.name.getRawValue().trim(),
+      email: this.registerForm.controls.email.getRawValue().trim().toLowerCase(),
+      password: this.registerForm.controls.password.getRawValue()
+    }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: () => {
         this.toastService.success('Registration complete. Five planner accounts were created for you.');
         void this.router.navigate(['/']);
       },
-      error: (error: { error?: { message?: string } }) => {
+      error: (error: HttpErrorResponse) => {
         this.loading = false;
-        this.toastService.error(error.error?.message ?? 'Unable to register.');
+        this.toastService.error(this.getErrorMessage(error));
       },
       complete: () => {
         this.loading = false;
       }
     });
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  private getErrorMessage(error: HttpErrorResponse): string {
+    const apiMessage = error.error?.message;
+
+    if (apiMessage) {
+      return apiMessage;
+    }
+
+    if (error.status === 0) {
+      return 'The server is waking up or unreachable right now. Please wait a few seconds and try again.';
+    }
+
+    if (error.status === 400) {
+      return 'That account could not be created. Please check the form details and try again.';
+    }
+
+    return 'Unable to register right now. Please try again.';
   }
 }

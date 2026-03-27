@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -21,6 +22,7 @@ export class LoginComponent {
   private readonly destroyRef = inject(DestroyRef);
 
   loading = false;
+  showPassword = false;
 
   readonly loginForm = this.formBuilder.nonNullable.group({
     email: ['demo@planner.com', [Validators.required, Validators.email]],
@@ -28,24 +30,53 @@ export class LoginComponent {
   });
 
   submit(): void {
+    if (this.loading) {
+      return;
+    }
+
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
     }
 
     this.loading = true;
-    this.userService.login(this.loginForm.getRawValue()).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+    this.userService.login({
+      email: this.loginForm.controls.email.getRawValue().trim().toLowerCase(),
+      password: this.loginForm.controls.password.getRawValue()
+    }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: () => {
         this.toastService.success('Login successful. Your five planners are ready.');
         void this.router.navigate(['/']);
       },
-      error: (error: { error?: { message?: string } }) => {
+      error: (error: HttpErrorResponse) => {
         this.loading = false;
-        this.toastService.error(error.error?.message ?? 'Unable to log in.');
+        this.toastService.error(this.getErrorMessage(error, 'login'));
       },
       complete: () => {
         this.loading = false;
       }
     });
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  private getErrorMessage(error: HttpErrorResponse, mode: 'login' | 'register'): string {
+    const apiMessage = error.error?.message;
+
+    if (apiMessage) {
+      return apiMessage;
+    }
+
+    if (error.status === 0) {
+      return 'The server is waking up or unreachable right now. Please wait a few seconds and try again.';
+    }
+
+    if (mode === 'login' && error.status === 401) {
+      return 'Invalid email or password. Please try again.';
+    }
+
+    return mode === 'login' ? 'Unable to log in right now. Please try again.' : 'Unable to register right now. Please try again.';
   }
 }

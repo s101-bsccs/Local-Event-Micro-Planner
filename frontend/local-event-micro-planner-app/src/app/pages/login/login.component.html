@@ -11,7 +11,12 @@
 
     <label>
       <span>Password</span>
-      <input type="password" formControlName="password" />
+      <div class="password-field">
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" />
+        <button class="password-toggle" type="button" (click)="togglePasswordVisibility()">
+          {{ showPassword ? 'Hide' : 'Show' }}
+        </button>
+      </div>
     </label>
 
     <button type="submit" [disabled]="loading">{{ loading ? 'Logging in...' : 'Login' }}</button>
